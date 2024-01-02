@@ -1,0 +1,130 @@
+mql5
+//+------------------------------------------------------------------+
+//|                                          Rule Plotter Forex Software|
+//|                               Developer: Forex Robot Easy Team         |
+//|                               Website: forexroboteasy.com          |
+//|                               Version: 1.0                                |
+//+------------------------------------------------------------------+
+
+// Define global variables
+int tradeMode = 0; // 0 for automated trading, 1 for manual trading
+double stopLoss = 0.0; // Stop loss level
+double takeProfit = 0.0; // Take profit level
+double trailingStop = 0.0; // Trailing stop level
+bool orderExecuted = false; // Flag to track if order has been executed
+int orderTicket = 0; // Order ticket number
+datetime orderOpenTime; // Order open time
+
+//+------------------------------------------------------------------+
+//|                        OnTick function                            |
+//|      Entry point of the program, called on each tick event        |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+   // Check if in automated trading mode
+   if (tradeMode == 0)
+   {
+      // Call algorithm for trading opportunities
+      bool tradeOpportunity = AlgorithmForTradingOpportunities();
+
+      // If a trade opportunity is found and no order has been executed
+      if (tradeOpportunity && !orderExecuted)
+      {
+         // Place buy/sell order
+         orderTicket = PlaceOrder();
+         orderOpenTime = TimeCurrent();
+         orderExecuted = true;
+      }
+   }
+}
+
+//+------------------------------------------------------------------+
+//|         Algorithm for Trading Opportunities function              |
+//|        Searches for trading opportunities based on parameters     |
+//+------------------------------------------------------------------+
+bool AlgorithmForTradingOpportunities()
+{
+   // Replace this with your own algorithm for finding trading opportunities
+   // For demonstration purposes, always return true in this sample code
+   return true;
+}
+
+//+------------------------------------------------------------------+
+//|                      Place Order function                         |
+//|              Places a buy/sell order with given parameters        |
+//+------------------------------------------------------------------+
+int PlaceOrder()
+{
+   // Replace this with your own code to place a buy/sell order
+   // For demonstration purposes, always return a random order ticket number in this sample code
+   return MathRand();
+}
+
+//+------------------------------------------------------------------+
+//|                      Modify Order function                        |
+//|            Modifies an existing order with new parameters         |
+//+------------------------------------------------------------------+
+void ModifyOrder(int orderTicket, double newStopLoss, double newTakeProfit, double newTrailingStop)
+{
+   // Replace this with your own code to modify an existing order
+   // For demonstration purposes, only update the global variables in this sample code
+   stopLoss = newStopLoss;
+   takeProfit = newTakeProfit;
+   trailingStop = newTrailingStop;
+}
+
+//+------------------------------------------------------------------+
+//|                      Cancel Order function                        |
+//|                  Cancels an existing order                        |
+//+------------------------------------------------------------------+
+void CancelOrder(int orderTicket)
+{
+   // Replace this with your own code to cancel an existing order
+   // For demonstration purposes, only update the global variables in this sample code
+   orderExecuted = false;
+   orderTicket = 0;
+   orderOpenTime = 0;
+}
+
+//+------------------------------------------------------------------+
+//|                  Order History function                           |
+//|              Maintains a record of past orders                     |
+//+------------------------------------------------------------------+
+void OrderHistory()
+{
+   // Replace this with your own code to maintain a record of past orders
+   // For demonstration purposes, only print the order details in this sample code
+   Print('Order Ticket: ', orderTicket);
+   Print('Order Open Time: ', TimeToString(orderOpenTime));
+   Print('Order Close Time: ', TimeToString(TimeCurrent()));
+}
+
+//+------------------------------------------------------------------+
+//|                      Test Cases function                          |
+//|                      Contains test cases                          |
+//+------------------------------------------------------------------+
+void TestCases()
+{
+   // Replace this with your own test cases to ensure the code's functionality and reliability
+   // For demonstration purposes, no test cases are included in this sample code
+}
+
+//+------------------------------------------------------------------+
+//|                     Initialization function                      |
+//|                 Called once when the program starts               |
+//+------------------------------------------------------------------+
+void OnInit()
+{
+   // Run test cases
+   TestCases();
+}
+
+//+------------------------------------------------------------------+
+//|                       Deinitialization function                   |
+//|                 Called once when the program ends                 |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+   // Print program termination reason
+   Print('Program terminated. Reason: ', reason);
+}
